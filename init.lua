@@ -8,6 +8,8 @@ end
 
 noremap('n', 'W', 'b')
 noremap('n', ';', ':')
+vim.api.nvim_set_keymap('n', 'S', ':%s//g<left><left>', {noremap = true, silent = true})
+
 
 vim.o.relativenumber = true
 undofile = true
