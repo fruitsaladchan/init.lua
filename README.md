@@ -3,6 +3,10 @@ init.lua i use for vms/servers
 
 tried making as minimal/short as possible
 
+# requirements
+- a nerd font
+- ripgrep
+
 # bindings
 
 - shift + h to move to previous buffer
