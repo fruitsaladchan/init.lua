@@ -24,9 +24,12 @@ require("lazy").setup({
       })
     end,
   },
+{
+    "echasnovski/mini.bufremove",
+ },
  {
     "williamboman/mason.nvim",
-    build = ":MasonUpdate", -- optional, updates the package registry
+    build = ":MasonUpdate", 
     config = function()
       require("mason").setup()
     end,
@@ -35,8 +38,24 @@ require("lazy").setup({
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "bashls", "pyright" }, -- Add other servers here
+        ensure_installed = { "bashls", "pyright" }, 
       })
+    end,
+  },
+{
+    "akinsho/bufferline.nvim",
+    tag = "*", 
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("bufferline").setup{
+        options = {
+          diagnostics = "nvim_lsp",
+          show_buffer_close_icons = true,
+          show_close_icon = true,
+          left_trunc_marker = "",
+          right_trunc_marker = "",
+        },
+      }
     end,
   },
   {
@@ -172,10 +191,19 @@ vim.keymap.set('n', 'c', '"_c', { noremap = true })
 vim.keymap.set('n', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'c', '"_c', { noremap = true })
-
+vim.keymap.set("n", "<C-h>", "<C-w>h", { remap = true, desc = "Go to left window" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { remap = true, desc = "Go to lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { remap = true, desc = "Go to upper window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { remap = true, desc = "Go to right window" })
 vim.keymap.set("n", "zz", "<Cmd>q!<CR>", { desc = "Quit" })
 vim.keymap.set("n", "Z", "<Cmd>wq!<CR>", { desc = "Quit" })
-
+vim.keymap.set("n", "<leader>bp", ":BufferLinePick<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bn", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bp", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", { noremap = true, silent = true, desc = "Prev buffer" })
+vim.keymap.set("n", "<S-l>", "<Cmd>BufferLineCycleNext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
+vim.keymap.set("n", "<leader>bd", "<Cmd>bd<CR>", { noremap = true, silent = true, desc = "Close buffer" })
+  
 vim.api.nvim_set_keymap('n', 'S', ':%s//g<left><left>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'P', ':set paste<CR>P:set nopaste<CR>', { noremap = true, silent = true })
