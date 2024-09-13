@@ -6,6 +6,7 @@ tried making as minimal/short as possible
 # requirements
 - a nerd font
 - ripgrep
+- gcc
 
 # bindings
 
