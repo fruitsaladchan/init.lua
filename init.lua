@@ -24,7 +24,21 @@ require("lazy").setup({
       })
     end,
   },
-
+ {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate", -- optional, updates the package registry
+    config = function()
+      require("mason").setup()
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "bashls", "pyright" }, -- Add other servers here
+      })
+    end,
+  },
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -147,7 +161,8 @@ vim.opt.mouse = "a"                -- Enable mouse support
 vim.cmd.colorscheme("catppuccin")
 
 -- Keybindings
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true }) -- Toggle file explorer
+vim.g.mapleader = " "
+vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true }) -- Toggle file explorer
 vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { noremap = true }) -- Fuzzy find files
 vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", { noremap = true }) -- Fuzzy grep search
 vim.keymap.set('n', 'W', 'b', { noremap = true })
@@ -158,10 +173,12 @@ vim.keymap.set('n', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'c', '"_c', { noremap = true })
 
+vim.keymap.set("n", "zz", "<Cmd>q!<CR>", { desc = "Quit" })
+vim.keymap.set("n", "Z", "<Cmd>wq!<CR>", { desc = "Quit" })
+
 vim.api.nvim_set_keymap('n', 'S', ':%s//g<left><left>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'P', ':set paste<CR>P:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'yy', '^vg_y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-S-v>', '<Esc>:set paste<CR>"+gP:set nopaste<CR>', { noremap = true, silent = true })
-
