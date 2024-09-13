@@ -24,9 +24,6 @@ require("lazy").setup({
       })
     end,
   },
-{
-    "echasnovski/mini.bufremove",
- },
  {
     "williamboman/mason.nvim",
     build = ":MasonUpdate", 
@@ -44,7 +41,6 @@ require("lazy").setup({
   },
 {
     "akinsho/bufferline.nvim",
-    tag = "*", 
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("bufferline").setup{
