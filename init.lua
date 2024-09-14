@@ -78,6 +78,10 @@ require("lazy").setup({
   dependencies = {
     "hrsh7th/cmp-buffer", -- source for text in buffer
     "hrsh7th/cmp-path", -- source for file system paths
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
     {
       "L3MON4D3/LuaSnip",
       version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
