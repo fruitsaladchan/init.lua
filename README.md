@@ -18,3 +18,5 @@ tried making as minimal/short as possible
 - space + ff for telescope
 - spaace + fg for telescpe grep
 - control + h/l for moving window ( ie from neovim to filetree)
+- spaace + | vertical split
+- space + - horizontal split
