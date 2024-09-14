@@ -54,6 +54,16 @@ require("lazy").setup({
       }
     end,
   },
+{
+  "folke/which-key.nvim",
+  event = "VeryLazy",
+  init = function()
+    vim.o.timeout = true
+    vim.o.timeoutlen = 300
+  end,
+  opts = {
+  },
+},
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -62,41 +72,65 @@ require("lazy").setup({
       require("lspconfig").pyright.setup{}
     end,
   },
-
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "L3MON4D3/LuaSnip", -- Snippet engine
+{
+  "hrsh7th/nvim-cmp",
+  event = "InsertEnter",
+  dependencies = {
+    "hrsh7th/cmp-buffer", -- source for text in buffer
+    "hrsh7th/cmp-path", -- source for file system paths
+    {
+      "L3MON4D3/LuaSnip",
+      version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      build = "make install_jsregexp",
     },
-    config = function()
-      local cmp = require("cmp")
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
-        mapping = {
+    "saadparwaiz1/cmp_luasnip", -- for autocompletion
+    "rafamadriz/friendly-snippets", -- useful snippets
+    "onsails/lspkind.nvim", -- vs-code like pictograms
+  },
+  config = function()
+    local cmp = require("cmp")
+
+    local luasnip = require("luasnip")
+
+    local lspkind = require("lspkind")
+
+    -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+    require("luasnip.loaders.from_vscode").lazy_load()
+
+    cmp.setup({
+      completion = {
+        completeopt = "menu,menuone,preview,noselect",
+      },
+      snippet = { -- configure how nvim-cmp interacts with snippet engine
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end,
+      },
+		 mapping = {
           ["<Tab>"] = cmp.mapping.select_next_item(),
           ["<S-Tab>"] = cmp.mapping.select_prev_item(),
           ["<C-n>"] = cmp.mapping.scroll_docs(-4),
           ["<C-p>"] = cmp.mapping.scroll_docs(4),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         },
-        sources = {
-          { name = "nvim_lsp" },
-          { name = "buffer" },
-          { name = "path" },
-        },
-      })
-    end,
-  },
+      -- sources for autocompletion
+      sources = cmp.config.sources({
+        { name = "luasnip" }, -- snippets
+        { name = "buffer" }, -- text within current buffer
+        { name = "path" }, -- file system paths
+      }),
 
-  {
+      -- configure lspkind for vs-code like pictograms in completion menu
+      formatting = {
+        format = lspkind.cmp_format({
+          maxwidth = 50,
+          ellipsis_char = "...",
+        }),
+      },
+    })
+  end,
+},
+{
     "kyazdani42/nvim-tree.lua",
     dependencies = { "kyazdani42/nvim-web-devicons" },
     config = function()
@@ -116,15 +150,27 @@ require("lazy").setup({
         defaults = {
           mappings = {
             i = {
-              ["<C-n>"] = require("telescope.actions").move_selection_next,
-              ["<C-p>"] = require("telescope.actions").move_selection_previous,
+              ["<C-j>"] = require("telescope.actions").move_selection_next,
+              ["<C-k>"] = require("telescope.actions").move_selection_previous,
             },
           },
         },
       })
     end,
   },
-
+ {
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup({
+        -- Add configuration options here if needed
+        formatters_by_ft = {
+          lua = { "stylua" },
+          python = { "black" },
+          -- Add other filetypes and formatters as needed
+        },
+      })
+    end,
+  },
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -142,7 +188,12 @@ require("lazy").setup({
   {
     "tpope/vim-commentary",
   },
-
+  
+  {
+    "stevearc/dressing.nvim",
+		event = "VeryLazy",
+  },
+  
   {
     "junegunn/vim-easy-align",
   },
@@ -159,7 +210,6 @@ require("lazy").setup({
     end,
   },
 })
-
 -- General Neovim settings
 vim.opt.number = true              -- Show line numbers
 vim.opt.relativenumber = true      -- Relative line numbers
@@ -177,9 +227,17 @@ vim.cmd.colorscheme("catppuccin")
 
 -- Keybindings
 vim.g.mapleader = " "
+
+--nvim-tree
 vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true }) -- Toggle file explorer
+
+--telescope
 vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { noremap = true }) -- Fuzzy find files
 vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", { noremap = true }) -- Fuzzy grep search
+vim.keymap.set("n", "<leader>fr", ":Telescope oldfiles<CR>", { noremap = true }) -- Fuzzy recent files
+vim.keymap.set("n", "<leader>fc", ":Telescope grep_string<CR>", { noremap = true }) -- Fuzzy string under cursor in cwd
+
+--custom
 vim.keymap.set('n', 'W', 'b', { noremap = true })
 vim.keymap.set('n', ';', ':', { noremap = true })
 vim.keymap.set('n', 'x', '"_x', { noremap = true })
@@ -187,26 +245,35 @@ vim.keymap.set('n', 'c', '"_c', { noremap = true })
 vim.keymap.set('n', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'c', '"_c', { noremap = true })
-vim.keymap.set("n", "<C-h>", "<C-w>h", { remap = true, desc = "Go to left window" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { remap = true, desc = "Go to lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { remap = true, desc = "Go to upper window" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { remap = true, desc = "Go to right window" })
 vim.keymap.set("n", "zz", "<Cmd>q!<CR>", { desc = "Quit" })
 vim.keymap.set("n", "Z", "<Cmd>wq!<CR>", { desc = "Quit" })
-vim.keymap.set("n", "<leader>bp", ":BufferLinePick<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bn", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bp", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", { noremap = true, silent = true, desc = "Prev buffer" })
-vim.keymap.set("n", "<S-l>", "<Cmd>BufferLineCycleNext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
-vim.keymap.set("n", "<leader>bd", "<Cmd>bd<CR>", { noremap = true, silent = true, desc = "Close buffer" })
-vim.keymap.set("n", "<A-Down>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-vim.keymap.set("n", "<A-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Increase window width" })
-vim.keymap.set("n", "<A-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Decrease window width" })
-  
 vim.api.nvim_set_keymap('n', 'S', ':%s//g<left><left>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'P', ':set paste<CR>P:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'yy', '^vg_y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-S-v>', '<Esc>:set paste<CR>"+gP:set nopaste<CR>', { noremap = true, silent = true })
+
+--changing windows
+vim.keymap.set("n", "<C-h>", "<C-w>h", { remap = true, desc = "Go to left window" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { remap = true, desc = "Go to lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { remap = true, desc = "Go to upper window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { remap = true, desc = "Go to right window" })
+
+--buffer 
+vim.keymap.set("n", "<leader>bp", ":BufferLinePick<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bn", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bp", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", { noremap = true, silent = true, desc = "Prev buffer" })
+vim.keymap.set("n", "<S-l>", "<Cmd>BufferLineCycleNext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
+vim.keymap.set("n", "<leader>bd", "<Cmd>bd<CR>", { noremap = true, silent = true, desc = "Close buffer" })
+
+--window height
+vim.keymap.set("n", "<A-Down>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
+vim.keymap.set("n", "<A-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Increase window width" })
+vim.keymap.set("n", "<A-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Decrease window width" })
+
+--splits
+vim.keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split below" })
+vim.keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split right" })
