@@ -7,6 +7,7 @@ tried making as minimal/short as possible
 - a nerd font
 - ripgrep
 - gcc
+- npm
 
 # bindings
 
