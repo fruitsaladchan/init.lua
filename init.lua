@@ -199,11 +199,10 @@ vim.keymap.set("n", "<leader>bp", ":BufferLineCyclePrev<CR>", { noremap = true, 
 vim.keymap.set("n", "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", { noremap = true, silent = true, desc = "Prev buffer" })
 vim.keymap.set("n", "<S-l>", "<Cmd>BufferLineCycleNext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bd", "<Cmd>bd<CR>", { noremap = true, silent = true, desc = "Close buffer" })
-
-keymap("n", "<A-Down>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-keymap("n", "<A-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-keymap("n", "<A-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Increase window width" })
-keymap("n", "<A-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<A-Down>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
+vim.keymap.set("n", "<A-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Increase window width" })
+vim.keymap.set("n", "<A-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Decrease window width" })
   
 vim.api.nvim_set_keymap('n', 'S', ':%s//g<left><left>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
