@@ -346,6 +346,8 @@ vim.api.nvim_set_keymap('n', 'P', ':set paste<CR>P:set nopaste<CR>', { noremap =
 vim.api.nvim_set_keymap('n', 'yy', '^vg_y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-S-v>', '<Esc>:set paste<CR>"+gP:set nopaste<CR>', { noremap = true, silent = true })
+keymap({ "n", "x" }, "<A-h>", "^", { desc = "To the first non-blank char of the line" })
+keymap({ "n", "x" }, "<A-l>", "$", { desc = "To the end of the line" })
 
 --changing windows
 vim.keymap.set("n", "<C-h>", "<C-w>h", { remap = true, desc = "Go to left window" })
