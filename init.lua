@@ -175,7 +175,90 @@ require("lazy").setup({
       })
     end,
   },
-  {
+
+{
+  "nvimdev/dashboard-nvim",
+  event = "VimEnter",
+  opts = function()
+    local banner = [[
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣶⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⣿⣿⣟⡿⣿⣿⣿⣿⡿⡁⣿⣿⣿⠀⠀⠀⠀⣀⣤⡾⣦⣄⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣀⣴⣾⠋⠉⣻⡷⢦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠃⢽⣿⣿⠿⢻⠏⠑⢀⣿⣿⣿⣀⣠⡶⠋⢹⣷⣄⢠⣿⣿⡶⣤⡀⠀⠀⠀
+⠀⠀⣀⣴⣾⢫⣿⡿⠀⣾⣿⠇⠀⣼⡟⠛⠛⣻⣿⣧⣀⣴⣶⣾⣿⣿⣷⣶⣄⣰⡟⣻⣿⡟⠉⣿⣷⡀⠘⣿⣿⠀⠙⢿⣇⢼⣿⣷⢦⣄
+⣴⡞⢹⣿⡿⣸⠟⠀⠀⣿⠏⠀⢸⣿⡟⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣿⣿⡇⠀⠻⣿⡇⠀⠈⢻⠀⠀⠀⠛⠌⠻⣿⡠⣿
+⣿⡏⡿⠏⠀⠁⠀⠀⠀⠃⠀⠀⠸⡿⠀⠀⢸⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣙⣿⠁⠀⠀⠹⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠃⠙
+⠋⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⢘⠃⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠸⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⠛⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣰⡀⢀⡀⣻⣄⡀⢀⣠⣴⣿⣿⣿⠃⢠⣿⣿⣿⣿⣿⣿⣿⣿⡆⠹⣿⣿⣿⣶⣄⡀⢀⣰⣏⣀⣀⣠⣇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠈⠉⠛⠋⠁⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠈⠙⠛⠛⠉⠉⠛⠀⠀⠀⠀⠀⠀⠀⠀
+
+   ]]
+    banner = string.rep("\n", 7) .. banner .. "\n"
+    local opts = {
+      theme = "doom",
+      hide = {
+        statusline = false,
+        tabline = false,
+        winbar = false,
+      },
+      config = {
+        header = vim.split(banner, "\n"),
+        center = {
+          { action = "ene | startinsert",     desc = " New file",     icon = " ", key = "n", icon_hl = "Character" },
+          { action = "Telescope find_files",  desc = " Find file",    icon = " ", key = "f", icon_hl = "Label" },
+          { action = "Telescope live_grep",   desc = " Find text",    icon = " ", key = "g", icon_hl = "Special" },
+          { action = "Telescope oldfiles",    desc = " Recent files", icon = " ", key = "r", icon_hl = "Macro" },
+          { action = "qa",                    desc = " Quit",         icon = " ", key = "q", icon_hl = "Error" },
+        },
+        footer = function()
+          local stats = require("lazy").stats()
+          local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+
+          local version = vim.version()
+
+          return {
+            string.format(
+              " Neovim v%d.%d.%d%s",
+              version.major,
+              version.minor,
+              version.patch,
+              version.prerelease and "(nightly)" or ""
+            ) .. " loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms",
+          }
+        end,
+      },
+    }
+
+    for _, button in ipairs(opts.config.center) do
+      button.key_format = "%s"
+      button.key_hl = "Constant"
+      button.desc_hl = "CursorLineNr"
+      button.desc = button.desc .. string.rep(" ", 50 - #button.desc)
+    end
+
+    if vim.o.filetype == "lazy" then
+      vim.api.nvim_create_autocmd("WinClosed", {
+        pattern = tostring(vim.api.nvim_get_current_win()),
+        once = true,
+        callback = function()
+          vim.schedule(function()
+            vim.api.nvim_exec_autocmds("UIEnter", { group = "dashboard" })
+          end)
+        end,
+      })
+    end
+
+    return opts
+  end,
+},
+    
+{
     "nvim-lualine/lualine.nvim",
     dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
@@ -202,16 +285,20 @@ require("lazy").setup({
     "junegunn/vim-easy-align",
   },
 
-  {
+    {
     "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require("ibl").setup({
-        scope = {
-          show_start = true,
-          show_end = true,
-        },
-      })
-    end,
+    event = { "BufReadPre", "BufNewFile" },
+    main = "ibl",
+    opts = {
+      indent = {
+        char = "┊",
+        tab_char = "┊",
+      },
+      scope = { enabled = false },
+      exclude = {
+        filetypes = { "help", "neo-tree", "lazy", "mason" },
+      },
+    },
   },
 })
 -- General Neovim settings
