@@ -40,20 +40,22 @@ require("lazy").setup({
     end,
   },
 {
-    "akinsho/bufferline.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("bufferline").setup{
-        options = {
-          diagnostics = "nvim_lsp",
-          show_buffer_close_icons = true,
-          show_close_icon = true,
-          left_trunc_marker = "",
-          right_trunc_marker = "",
-        },
-      }
-    end,
-  },
+  "akinsho/bufferline.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin/nvim" },
+  after = "catppuccin",  -- Ensure it loads after Catppuccin
+  config = function()
+    require("bufferline").setup {
+      highlights = require("catppuccin.groups.integrations.bufferline").get(),  -- Use Catppuccin colors for bufferline
+      options = {
+        diagnostics = "nvim_lsp",
+        show_buffer_close_icons = true,
+        show_close_icon = true,
+        left_trunc_marker = "",
+        right_trunc_marker = "",
+      },
+    }
+  end,
+},
 {
   "folke/which-key.nvim",
   event = "VeryLazy",
