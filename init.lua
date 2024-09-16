@@ -66,6 +66,31 @@ require("lazy").setup({
   opts = {
   },
 },
+{
+  "windwp/nvim-autopairs",
+  event = { "InsertEnter" },
+  dependencies = {
+    "hrsh7th/nvim-cmp",
+  },
+  config = function()
+    local autopairs = require("nvim-autopairs")
+
+    autopairs.setup({
+      check_ts = true, 
+      ts_config = {
+        lua = { "string" }, 
+        javascript = { "template_string" }, 
+        java = false, 
+      },
+    })
+
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+
+    local cmp = require("cmp")
+
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+  end,
+},
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -112,7 +137,7 @@ require("lazy").setup({
           luasnip.lsp_expand(args.body)
         end,
       },
-		 mapping = {
+		mapping = {
           ["<Tab>"] = cmp.mapping.select_next_item(),
           ["<S-Tab>"] = cmp.mapping.select_prev_item(),
           ["<C-n>"] = cmp.mapping.scroll_docs(-4),
@@ -311,6 +336,7 @@ vim.opt.shiftwidth = 4             -- Number of spaces for auto-indents
 vim.opt.expandtab = true           -- Use spaces instead of tabs
 vim.opt.smartcase = true           -- Smart case when searching
 vim.opt.ignorecase = true          -- Ignore case in search
+vim.opt.undofile = true            -- enable undofile
 vim.opt.splitright = true          -- Vertical splits open on the right
 vim.opt.splitbelow = true          -- Horizontal splits open below
 vim.opt.mouse = "a"                -- Enable mouse support
@@ -363,11 +389,11 @@ vim.keymap.set("n", "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", { noremap = true, s
 vim.keymap.set("n", "<S-l>", "<Cmd>BufferLineCycleNext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bd", "<Cmd>bd<CR>", { noremap = true, silent = true, desc = "Close buffer" })
 
---window height
+--window size
 vim.keymap.set("n", "<A-Down>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
 vim.keymap.set("n", "<A-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Increase window width" })
-vim.keymap.set("n", "<A-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<A-Right>", "<Cmd>vertical resize -2<CR>", { desc = "Increase window width" })
+vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize +2<CR>", { desc = "Decrease window width" })
 
 --splits
 vim.keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split below" })
