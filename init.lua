@@ -392,6 +392,7 @@ vim.keymap.set("n", "<A-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window he
 vim.keymap.set("n", "<A-Right>", "<Cmd>vertical resize -2<CR>", { desc = "Increase window width" })
 vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize +2<CR>", { desc = "Decrease window width" })
 
+
 --splits
 vim.keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split below" })
 vim.keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split right" })
