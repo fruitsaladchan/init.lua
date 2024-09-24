@@ -10,7 +10,6 @@ tried making as minimal/short as possible
 - npm
 
 # bindings
-
 ## buffers
 - shift + h to move to previous buffer
 - shift + l to move to next buffer
