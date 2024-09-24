@@ -11,7 +11,7 @@ tried making as minimal/short as possible
 
 # bindings
 
-### buffers
+## buffers
 - shift + h to move to previous buffer
 - shift + l to move to next buffer
 - space + bd to close buffer
@@ -21,7 +21,8 @@ tried making as minimal/short as possible
 
 ## telescope
 - space + ff for telescope
-- spaace + fg for telescpe grep
+- space + fg for telescpe grep
+- space + fr for recent files
 
 - control + h/l for moving window ( ie from neovim to filetree)
 
