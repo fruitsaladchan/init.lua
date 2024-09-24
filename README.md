@@ -22,7 +22,8 @@ tried making as minimal/short as possible
 - space + ff for telescope
 - space + fg for telescpe grep
 - space + fr for recent files
-
+## genereal
+- alt + left/right/up/down for changing windows size
 - control + h/l for moving window ( ie from neovim to filetree)
 
 ## splits
