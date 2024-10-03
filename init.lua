@@ -357,7 +357,9 @@ vim.keymap.set('n', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'd', '"_d', { noremap = true })
 vim.keymap.set('v', 'c', '"_c', { noremap = true })
 vim.keymap.set("n", "zz", "<Cmd>q!<CR>", { desc = "Quit" })
-vim.keymap.set("n", "Z", "<Cmd>wq!<CR>", { desc = "Quit" })
+vim.keymap.set("n", "Z", "<Cmd>wq!<CR>", { desc = "Write Quit" })
+vim.keymap.set("n", "J", "mzJ`Z")
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {desc = "replace under cursor" })
 vim.api.nvim_set_keymap('n', 'S', ':%s//g<left><left>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'P', ':set paste<CR>P:set nopaste<CR>', { noremap = true, silent = true })
@@ -366,6 +368,14 @@ vim.api.nvim_set_keymap('n', 'p', ':set paste<CR>p:set nopaste<CR>', { noremap =
 vim.api.nvim_set_keymap('i', '<C-S-v>', '<Esc>:set paste<CR>"+gP:set nopaste<CR>', { noremap = true, silent = true })
 vim.keymap.set("n", "<A-h>", "^", { desc = "To the first non-blank char of the line" })
 vim.keymap.set("n", "<A-l>", "$", { desc = "To the end of the line" })
+
+--better up/down
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+--beter up/down page
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 --changing windows
 vim.keymap.set("n", "<C-h>", "<C-w>h", { remap = true, desc = "Go to left window" })
