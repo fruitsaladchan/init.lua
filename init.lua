@@ -42,10 +42,10 @@ require("lazy").setup({
 {
   "akinsho/bufferline.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin/nvim" },
-  after = "catppuccin",  -- Ensure it loads after Catppuccin
+  after = "catppuccin",
   config = function()
     require("bufferline").setup {
-      highlights = require("catppuccin.groups.integrations.bufferline").get(),  -- Use Catppuccin colors for bufferline
+      highlights = require("catppuccin.groups.integrations.bufferline").get(),
       options = {
         diagnostics = "nvim_lsp",
         show_buffer_close_icons = true,
@@ -103,20 +103,20 @@ require("lazy").setup({
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
   dependencies = {
-    "hrsh7th/cmp-buffer", -- source for text in buffer
-    "hrsh7th/cmp-path", -- source for file system paths
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     {
       "L3MON4D3/LuaSnip",
-      version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      version = "v2.*",
       build = "make install_jsregexp",
     },
-    "saadparwaiz1/cmp_luasnip", -- for autocompletion
-    "rafamadriz/friendly-snippets", -- useful snippets
-    "onsails/lspkind.nvim", -- vs-code like pictograms
+    "saadparwaiz1/cmp_luasnip",
+    "rafamadriz/friendly-snippets",
+    "onsails/lspkind.nvim",
   },
   config = function()
     local cmp = require("cmp")
@@ -125,14 +125,13 @@ require("lazy").setup({
 
     local lspkind = require("lspkind")
 
-    -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
 
     cmp.setup({
       completion = {
         completeopt = "menu,menuone,preview,noselect",
       },
-      snippet = { -- configure how nvim-cmp interacts with snippet engine
+      snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
@@ -144,14 +143,12 @@ require("lazy").setup({
           ["<C-p>"] = cmp.mapping.scroll_docs(4),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         },
-      -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
-        { name = "path" }, -- file system paths
+        { name = "luasnip" },
+        { name = "buffer" },
+        { name = "path" },
       }),
 
-      -- configure lspkind for vs-code like pictograms in completion menu
       formatting = {
         format = lspkind.cmp_format({
           maxwidth = 50,
@@ -193,11 +190,9 @@ require("lazy").setup({
     "stevearc/conform.nvim",
     config = function()
       require("conform").setup({
-        -- Add configuration options here if needed
         formatters_by_ft = {
           lua = { "stylua" },
           python = { "black" },
-          -- Add other filetypes and formatters as needed
         },
       })
     end,
@@ -338,7 +333,6 @@ vim.opt.splitright = true          -- Vertical splits open on the right
 vim.opt.splitbelow = true          -- Horizontal splits open below
 vim.opt.mouse = "a"                -- Enable mouse support
 
--- Set the Catppuccin colorscheme
 vim.cmd.colorscheme("catppuccin")
 
 -- Keybindings
