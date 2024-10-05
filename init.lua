@@ -1,359 +1,246 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
+        vim.fn.system({
+                "git",
+                "clone",
+                "--filter=blob:none",
+                "https://github.com/folke/lazy.nvim.git",
+                "--branch=stable",
+                lazypath,
+        })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+        { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
-	{
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				highlight = { enable = true },
-				indent = { enable = true },
-			})
-		end,
-	},
-	{
-		"williamboman/mason.nvim",
-		build = ":MasonUpdate",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "bashls", "pyright" },
-			})
-		end,
-	},
-	{
-		"akinsho/bufferline.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin/nvim" },
-		after = "catppuccin",
-		config = function()
-			require("bufferline").setup({
-				highlights = require("catppuccin.groups.integrations.bufferline").get(),
-				options = {
-					diagnostics = "nvim_lsp",
-					show_buffer_close_icons = true,
-					show_close_icon = true,
-					left_trunc_marker = "",
-					right_trunc_marker = "",
-				},
-			})
-		end,
-	},
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {},
-	},
-	{
-		"windwp/nvim-autopairs",
-		event = { "InsertEnter" },
-		dependencies = {
-			"hrsh7th/nvim-cmp",
-		},
-		config = function()
-			local autopairs = require("nvim-autopairs")
+        {
+                "nvim-treesitter/nvim-treesitter",
+                run = ":TSUpdate",
+                config = function()
+                        require("nvim-treesitter.configs").setup({
+                                highlight = { enable = true },
+                                indent = { enable = true },
+                        })
+                end,
+        },
+        {
+                "williamboman/mason.nvim",
+                build = ":MasonUpdate",
+                config = function()
+                        require("mason").setup()
+                end,
+        },
+        {
+                "williamboman/mason-lspconfig.nvim",
+                config = function()
+                        require("mason-lspconfig").setup({
+                                ensure_installed = { "bashls", "pyright" },
+                        })
+                end,
+        },
+        {
+                "akinsho/bufferline.nvim",
+                dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin/nvim" },
+                after = "catppuccin",
+                config = function()
+                        require("bufferline").setup({
+                                highlights = require("catppuccin.groups.integrations.bufferline").get(),
+                                options = {
+                                        diagnostics = "nvim_lsp",
+                                        show_buffer_close_icons = true,
+                                        show_close_icon = true,
+                                        left_trunc_marker = "",
+                                        right_trunc_marker = "",
+                                },
+                        })
+                end,
+        },
+        {
+                "folke/which-key.nvim",
+                event = "VeryLazy",
+                init = function()
+                        vim.o.timeout = true
+                        vim.o.timeoutlen = 300
+                end,
+                opts = {},
+        },
+        {
+                "windwp/nvim-autopairs",
+                event = { "InsertEnter" },
+                dependencies = {
+                        "hrsh7th/nvim-cmp",
+                },
+                config = function()
+                        local autopairs = require("nvim-autopairs")
 
-			autopairs.setup({
-				check_ts = true,
-				ts_config = {
-					lua = { "string" },
-					javascript = { "template_string" },
-					java = false,
-				},
-			})
+                        autopairs.setup({
+                                check_ts = true,
+                                ts_config = {
+                                        lua = { "string" },
+                                        javascript = { "template_string" },
+                                        java = false,
+                                },
+                        })
 
-			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+                        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
-			local cmp = require("cmp")
+                        local cmp = require("cmp")
 
-			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
-		config = function()
-			require("lspconfig").bashls.setup({})
+                        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+                end,
+        },
+        {
+                "neovim/nvim-lspconfig",
+                config = function()
+                        require("lspconfig").bashls.setup({})
 
-			require("lspconfig").pyright.setup({})
-		end,
-	},
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-			{
-				"L3MON4D3/LuaSnip",
-				version = "v2.*",
-				build = "make install_jsregexp",
-			},
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			"onsails/lspkind.nvim",
-		},
-		config = function()
-			local cmp = require("cmp")
+                        require("lspconfig").pyright.setup({})
+                end,
+        },
+        {
+                "hrsh7th/nvim-cmp",
+                event = "InsertEnter",
+                dependencies = {
+                        "hrsh7th/cmp-buffer",
+                        "hrsh7th/cmp-path",
+                        "hrsh7th/cmp-nvim-lsp",
+                        "hrsh7th/cmp-buffer",
+                        "hrsh7th/cmp-path",
+                        "hrsh7th/cmp-cmdline",
+                        {
+                                "L3MON4D3/LuaSnip",
+                                version = "v2.*",
+                                build = "make install_jsregexp",
+                        },
+                        "saadparwaiz1/cmp_luasnip",
+                        "rafamadriz/friendly-snippets",
+                        "onsails/lspkind.nvim",
+                },
+                config = function()
+                        local cmp = require("cmp")
 
-			local luasnip = require("luasnip")
+                        local luasnip = require("luasnip")
 
-			local lspkind = require("lspkind")
+                        local lspkind = require("lspkind")
 
-			require("luasnip.loaders.from_vscode").lazy_load()
+                        require("luasnip.loaders.from_vscode").lazy_load()
 
-			cmp.setup({
-				completion = {
-					completeopt = "menu,menuone,preview,noselect",
-				},
-				snippet = {
-					expand = function(args)
-						luasnip.lsp_expand(args.body)
-					end,
-				},
-				mapping = {
-					["<Tab>"] = cmp.mapping.select_next_item(),
-					["<S-Tab>"] = cmp.mapping.select_prev_item(),
-					["<C-n>"] = cmp.mapping.scroll_docs(-4),
-					["<C-p>"] = cmp.mapping.scroll_docs(4),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-				},
-				sources = cmp.config.sources({
-					{ name = "luasnip" },
-					{ name = "buffer" },
-					{ name = "path" },
-				}),
+                        cmp.setup({
+                                completion = {
+                                        completeopt = "menu,menuone,preview,noselect",
+                                },
+                                snippet = {
+                                        expand = function(args)
+                                                luasnip.lsp_expand(args.body)
+                                        end,
+                                },
+                                mapping = {
+                                        ["<Tab>"] = cmp.mapping.select_next_item(),
+                                        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+                                        ["<C-n>"] = cmp.mapping.scroll_docs(-4),
+                                        ["<C-p>"] = cmp.mapping.scroll_docs(4),
+                                        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                                },
+                                sources = cmp.config.sources({
+                                        { name = "luasnip" },
+                                        { name = "buffer" },
+                                        { name = "path" },
+                                }),
 
-				formatting = {
-					format = lspkind.cmp_format({
-						maxwidth = 50,
-						ellipsis_char = "...",
-					}),
-				},
-			})
-		end,
-	},
-	{
-		"kyazdani42/nvim-tree.lua",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
-		config = function()
-			require("nvim-tree").setup()
-		end,
-	},
+                                formatting = {
+                                        format = lspkind.cmp_format({
+                                                maxwidth = 50,
+                                                ellipsis_char = "...",
+                                        }),
+                                },
+                        })
+                end,
+        },
+        {
+                "kyazdani42/nvim-tree.lua",
+                dependencies = { "kyazdani42/nvim-web-devicons" },
+                config = function()
+                        require("nvim-tree").setup()
+                end,
+        },
 
-	{
-		"tpope/vim-fugitive",
-	},
+        {
+                "tpope/vim-fugitive",
+        },
 
-	{
-		"nvim-telescope/telescope.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("telescope").setup({
-				defaults = {
-					mappings = {
-						i = {
-							["<C-j>"] = require("telescope.actions").move_selection_next,
-							["<C-k>"] = require("telescope.actions").move_selection_previous,
-						},
-					},
-				},
-			})
-		end,
-	},
-	{
-		"stevearc/conform.nvim",
-		config = function()
-			require("conform").setup({
-				format_on_save = {
-					timeout_ms = 500,
-					lsp_format = "fallback",
-				},
-				formatters_by_ft = {
-					lua = { "stylua" },
-					python = { "autopep8" },
-					json = { "prettier" },
-					sh = { "shfmt" },
-				},
-			})
-		end,
-	},
+        {
+                "nvim-telescope/telescope.nvim",
+                dependencies = { "nvim-lua/plenary.nvim" },
+                config = function()
+                        require("telescope").setup({
+                                defaults = {
+                                        mappings = {
+                                                i = {
+                                                        ["<C-j>"] = require("telescope.actions").move_selection_next,
+                                                        ["<C-k>"] = require("telescope.actions").move_selection_previous,
+                                                },
+                                        },
+                                },
+                        })
+                end,
+        },
+        {
+                "stevearc/conform.nvim",
+                config = function()
+                        require("conform").setup({
+                                format_on_save = {
+                                        timeout_ms = 500,
+                                        lsp_format = "fallback",
+                                },
+                                formatters_by_ft = {
+                                        lua = { "stylua" },
+                                        python = { "autopep8" },
+                                        json = { "prettier" },
+                                        sh = { "shfmt" },
+                                },
+                        })
+                end,
+        },
+        {
+                "nvim-lualine/lualine.nvim",
+                dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
+                config = function()
+                        require("lualine").setup({
+                                options = { theme = "catppuccin" },
+                        })
+                end,
+        },
+        {
+                "tpope/vim-surround",
+        },
 
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		opts = function()
-			local banner = [[
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣶⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣶⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠊⣿⣿⣟⡿⣿⣿⣿⣿⡿⡁⣿⣿⣿⠀⠀⠀⠀⣀⣤⡾⣦⣄⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣀⣴⣾⠋⠉⣻⡷⢦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠃⢽⣿⣿⠿⢻⠏⠑⢀⣿⣿⣿⣀⣠⡶⠋⢹⣷⣄⢠⣿⣿⡶⣤⡀⠀⠀⠀
-⠀⠀⣀⣴⣾⢫⣿⡿⠀⣾⣿⠇⠀⣼⡟⠛⠛⣻⣿⣧⣀⣴⣶⣾⣿⣿⣷⣶⣄⣰⡟⣻⣿⡟⠉⣿⣷⡀⠘⣿⣿⠀⠙⢿⣇⢼⣿⣷⢦⣄
-⣴⡞⢹⣿⡿⣸⠟⠀⠀⣿⠏⠀⢸⣿⡟⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣿⣿⡇⠀⠻⣿⡇⠀⠈⢻⠀⠀⠀⠛⠌⠻⣿⡠⣿
-⣿⡏⡿⠏⠀⠁⠀⠀⠀⠃⠀⠀⠸⡿⠀⠀⢸⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣙⣿⠁⠀⠀⠹⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠃⠙
-⠋⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⢘⠃⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠸⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⠛⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣰⡀⢀⡀⣻⣄⡀⢀⣠⣴⣿⣿⣿⠃⢠⣿⣿⣿⣿⣿⣿⣿⣿⡆⠹⣿⣿⣿⣶⣄⡀⢀⣰⣏⣀⣀⣠⣇⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠈⠉⠛⠋⠁⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠈⠙⠛⠛⠉⠉⠛⠀⠀⠀⠀⠀⠀⠀⠀
+        {
+                "tpope/vim-commentary",
+        },
+        {
+                "stevearc/dressing.nvim",
+                event = "VeryLazy",
+        },
+        {
+                "junegunn/vim-easy-align",
+        },
 
-   ]]
-			banner = string.rep("\n", 7) .. banner .. "\n"
-			local opts = {
-				theme = "doom",
-				hide = {
-					statusline = false,
-					tabline = false,
-					winbar = false,
-				},
-				config = {
-					header = vim.split(banner, "\n"),
-					center = {
-						{
-							action = "ene | startinsert",
-							desc = " New file",
-							icon = " ",
-							key = "n",
-							icon_hl = "Character",
-						},
-						{
-							action = "Telescope find_files",
-							desc = " Find file",
-							icon = " ",
-							key = "f",
-							icon_hl = "Label",
-						},
-						{
-							action = "Telescope live_grep",
-							desc = " Find text",
-							icon = " ",
-							key = "g",
-							icon_hl = "Special",
-						},
-						{
-							action = "Telescope oldfiles",
-							desc = " Recent files",
-							icon = " ",
-							key = "r",
-							icon_hl = "Macro",
-						},
-						{
-							action = "qa",
-							desc = " Quit",
-							icon = " ",
-							key = "q",
-							icon_hl = "Error",
-						},
-					},
-					footer = function()
-						local stats = require("lazy").stats()
-						local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-
-						local version = vim.version()
-
-						return {
-							string.format(
-								" Neovim v%d.%d.%d%s",
-								version.major,
-								version.minor,
-								version.patch,
-								version.prerelease and "(nightly)" or ""
-							) .. " loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms",
-						}
-					end,
-				},
-			}
-
-			for _, button in ipairs(opts.config.center) do
-				button.key_format = "%s"
-				button.key_hl = "Constant"
-				button.desc_hl = "CursorLineNr"
-				button.desc = button.desc .. string.rep(" ", 50 - #button.desc)
-			end
-
-			if vim.o.filetype == "lazy" then
-				vim.api.nvim_create_autocmd("WinClosed", {
-					pattern = tostring(vim.api.nvim_get_current_win()),
-					once = true,
-					callback = function()
-						vim.schedule(function()
-							vim.api.nvim_exec_autocmds("UIEnter", { group = "dashboard" })
-						end)
-					end,
-				})
-			end
-
-			return opts
-		end,
-	},
-	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
-		config = function()
-			require("lualine").setup({
-				options = { theme = "catppuccin" },
-			})
-		end,
-	},
-
-	{
-		"tpope/vim-surround",
-	},
-
-	{
-		"tpope/vim-commentary",
-	},
-	{
-		"stevearc/dressing.nvim",
-		event = "VeryLazy",
-	},
-	{
-		"junegunn/vim-easy-align",
-	},
-
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		main = "ibl",
-		opts = {
-			indent = {
-				char = "┊",
-				tab_char = "┊",
-			},
-			scope = { enabled = false },
-			exclude = {
-				filetypes = { "help", "neo-tree", "lazy", "mason" },
-			},
-		},
-	},
+        {
+                "lukas-reineke/indent-blankline.nvim",
+                event = { "BufReadPre", "BufNewFile" },
+                main = "ibl",
+                opts = {
+                        indent = {
+                                char = "┊",
+                                tab_char = "┊",
+                        },
+                        scope = { enabled = false },
+                        exclude = {
+                                filetypes = { "help", "neo-tree", "lazy", "mason" },
+                        },
+                },
+        },
 })
 -- General Neovim settings
 vim.opt.number = true -- Show line numbers
@@ -394,10 +281,10 @@ vim.keymap.set("n", "zz", "<Cmd>wq!<CR>", { desc = "Write Quit" })
 vim.keymap.set("n", "Z", "<Cmd>q!<CR>", { desc = "Quit" })
 vim.keymap.set("n", "J", "mzJ`Z")
 vim.keymap.set(
-	"n",
-	"<leader>s",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "replace under cursor" }
+        "n",
+        "<leader>s",
+        [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+        { desc = "replace under cursor" }
 )
 vim.api.nvim_set_keymap("n", "S", ":%s//g<left><left>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "p", ":set paste<CR>p:set nopaste<CR>", { noremap = true, silent = true })
