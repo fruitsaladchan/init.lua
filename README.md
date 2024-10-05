@@ -19,7 +19,7 @@ i tried making this as minimal/short as possible and fitting all into one lua fi
 
 
 # requirements
-- a nerd font
+- a nerd font (im using JetBrainsMono Nerd Font)
 - ripgrep
 - gcc
 - npm
