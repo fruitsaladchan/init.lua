@@ -26,9 +26,22 @@ require("lazy").setup({
 	},
 	{
 		"williamboman/mason.nvim",
+		dependencies = {
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+		},
 		build = ":MasonUpdate",
 		config = function()
 			require("mason").setup()
+			local mason_tool_installer = require("mason-tool-installer")
+
+			mason_tool_installer.setup({
+				ensure_installed = {
+					"prettier",
+					"stylua",
+					"isort",
+					"black",
+				},
+			})
 		end,
 	},
 	{
@@ -274,8 +287,15 @@ require("lazy").setup({
 				},
 				formatters_by_ft = {
 					lua = { "stylua" },
-					python = { "autopep8" },
+					javascript = { "prettier" },
+					typescript = { "prettier" },
+					css = { "prettier" },
+					javascriptreact = { "prettier" },
+					typescriptreact = { "prettier" },
+					python = { "isort", "black" },
 					json = { "prettier" },
+					yaml = { "prettier" },
+					html = { "prettier" },
 					sh = { "shfmt" },
 				},
 			})
