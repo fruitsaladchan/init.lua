@@ -471,8 +471,8 @@ vim.keymap.set("n", "c", '"_c', { noremap = true })
 vim.keymap.set("n", "d", '"_d', { noremap = true })
 vim.keymap.set("v", "d", '"_d', { noremap = true })
 vim.keymap.set("v", "c", '"_c', { noremap = true })
-vim.keymap.set("n", "zz", "<Cmd>wq!<CR>", { desc = "Write Quit" })
-vim.keymap.set("n", "Z", "<Cmd>q!<CR>", { desc = "Quit" })
+vim.keymap.set("n", "zz", "<Cmd>q!<CR>", { desc = "Write Quit" })
+vim.keymap.set("n", "Z", "<Cmd>wq!<CR>", { desc = "Quit" })
 vim.keymap.set("n", "J", "mzJ`Z")
 vim.keymap.set(
 	"n",
