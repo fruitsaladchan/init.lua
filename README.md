@@ -14,8 +14,8 @@ i tried making this as minimal/short as possible and fitting all into one lua fi
 - lualine
 - whichkey
 - nvim-tree
-- dressing.nvim
-- and more
+- telescope
+- and more!
 
 
 # requirements
@@ -25,6 +25,7 @@ i tried making this as minimal/short as possible and fitting all into one lua fi
 - npm
 
 # bindings
+
 ## buffers
 - shift + h to move to previous buffer
 - shift + l to move to next buffer
