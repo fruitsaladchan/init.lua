@@ -1,7 +1,7 @@
 # init.lua
-init.lua i use for vms/servers
+init.lua i like to use for vms/servers
 
-tried making as minimal/short as possible and fitting all into one file
+i tried making this as minimal/short as possible and fitting all into one lua file
 
 # plugins
 - lazy package manager
