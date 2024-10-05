@@ -4,18 +4,18 @@ init.lua i use for vms/servers
 tried making as minimal/short as possible and fitting all into one file
 
 # plugins
--lazy package manager
--catpuccin colorscheme
--conform
--nvim-lsp
--nvim-cmp
--treesitter
--mason
--lualine
--whichkey
--nvim-tree
--dressing.nvim
--and more
+- lazy package manager
+- catpuccin colorscheme
+- conform
+- nvim-lsp
+- nvim-cmp
+- treesitter
+- mason
+- lualine
+- whichkey
+- nvim-tree
+- dressing.nvim
+- and more
 
 
 # requirements
