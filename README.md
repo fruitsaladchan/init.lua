@@ -24,6 +24,7 @@ i tried making this as minimal/short as possible and fitting all into one lua fi
 - fd
 - gcc
 - npm
+- luarocks
 
 # bindings
 
