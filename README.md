@@ -6,21 +6,22 @@ i tried making this as minimal/short as possible and fitting all into one lua fi
 # plugins
 - lazy package manager
 - catpuccin colorscheme
-- conform
-- nvim-lsp
+- conform.nvim
+- neovim-lsp
 - nvim-cmp
-- treesitter
-- mason
-- lualine
-- whichkey
-- nvim-tree
-- telescope
+- nvim-treesitter
+- mason.nvim
+- lualine.nvim
+- which-key.nvim
+- nvim-tree.lua
+- telescope.nvim
 - and more!
 
 
 # requirements
 - a nerd font (im using JetBrainsMono Nerd Font)
 - ripgrep
+- fd
 - gcc
 - npm
 
