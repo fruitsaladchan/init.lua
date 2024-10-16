@@ -93,7 +93,7 @@ require("lazy").setup({
 					"lua_ls",
 					"pyright",
 					"ast_grep",
-					"emmet_ls",
+					"emmet_language_server",
 					"graphql",
 				},
 			})
