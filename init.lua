@@ -448,6 +448,7 @@ vim.opt.undofile = true -- enable undofile
 vim.opt.splitright = true -- Vertical splits open on the right
 vim.opt.splitbelow = true -- Horizontal splits open below
 vim.opt.mouse = "a" -- Enable mouse support
+vim.opt.cmdheight = 0 --hide cmd bar
 
 vim.cmd.colorscheme("catppuccin")
 
