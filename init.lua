@@ -406,9 +406,13 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"tpope/vim-surround",
+		"kylechui/nvim-surround",
+		version = "*",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({})
+		end,
 	},
-
 	{
 		"tpope/vim-commentary",
 	},
@@ -449,6 +453,11 @@ vim.opt.splitright = true -- Vertical splits open on the right
 vim.opt.splitbelow = true -- Horizontal splits open below
 vim.opt.mouse = "a" -- Enable mouse support
 vim.opt.cmdheight = 0 --hide cmd bar
+vim.opt.termguicolors = true --use termguicolors
+vim.opt.wrap = false --disable text wrapping
+vim.opt.smartcase = true --use smartcase
+vim.opt.ignorecase = true --ignorecase
+vim.opt.clipboard = "unnamedplus"
 
 vim.cmd.colorscheme("catppuccin")
 
