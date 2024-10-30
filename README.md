@@ -22,7 +22,7 @@ minimal init.lua i like to use for vms/servers
 - fd
 - gcc
 - npm
-- luarocks
+- luarocks (only needed for lua_ls)
 
 # bindings
 
