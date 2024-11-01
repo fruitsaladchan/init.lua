@@ -579,6 +579,7 @@ vim.keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split right" })
 
 --package manager
 vim.keymap.set("n", "<leader>pl", "<CMD>Lazy<CR>", { desc = "Lazy" })
+vim.keymap.set("n", "<leader>pm", "<CMD>Mason<CR>", { desc = "Mason " })
 
 --dismiss notifications
 vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", { desc = "Dissmiss Notifications" })
