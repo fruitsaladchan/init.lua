@@ -45,6 +45,7 @@ minimal init.lua i like to use for vms/servers
 ## genereal
 - alt + left/right/up/down for changing windows size
 - control + h/l for moving window ( ie from neovim to filetree)
+- space + pl to open lazy
 
 ## splits
 - spaace + | vertical split
