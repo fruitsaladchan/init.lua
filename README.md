@@ -1,6 +1,9 @@
 # init.lua
 minimal init.lua i like to use for vms/servers
 
+![image](https://github.com/user-attachments/assets/728966e2-acbf-4989-87ed-777e1b2969b6)
+
+
 # plugins
 - lazy package manager
 - catpuccin colorscheme
