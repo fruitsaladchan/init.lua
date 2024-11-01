@@ -103,6 +103,19 @@ require("lazy").setup({
                 end,
         },
         {
+                "folke/noice.nvim",
+                event = "VeryLazy",
+                opts = {
+                        cmdline = {
+                                view = "cmdline",
+                        },
+                },
+                dependencies = {
+                        "MunifTanjim/nui.nvim",
+                        "rcarriga/nvim-notify",
+                },
+        },
+        {
                 "akinsho/bufferline.nvim",
                 dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin/nvim" },
                 after = "catppuccin",
@@ -183,8 +196,7 @@ require("lazy").setup({
                                         keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
                                         opts.desc = "Show LSP type definitions"
-                                        keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show
-lsp type definitions
+                                        keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
                                         opts.desc = "See available code actions"
                                         keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
@@ -285,7 +297,7 @@ lsp type definitions
         },
         {
                 "hrsh7th/nvim-cmp",
-                event = "InsertEnter",
+                event = { "InsertEnter", "CmdlineEnter" },
                 dependencies = {
                         "hrsh7th/cmp-buffer",
                         "hrsh7th/cmp-nvim-lsp",
@@ -335,12 +347,11 @@ lsp type definitions
                                         ["<CR>"] = cmp.mapping.confirm({ select = true }),
                                 },
                                 sources = cmp.config.sources({
-                                        { name = "nvim_lsp" },
-                                        { name = "luasnip" },
-                                        { name = "buffer" },
-                                        { name = "path" },
+                                        { name = "nvim_lsp", max_item_count = 10 },
+                                        { name = "luasnip", max_item_count = 5 },
+                                        { name = "buffer", max_item_count = 8 },
+                                        { name = "path", max_item_count = 5 },
                                 }),
-
                                 formatting = {
                                         format = lspkind.cmp_format({
                                                 maxwidth = 50,
@@ -351,6 +362,20 @@ lsp type definitions
                                         completion = cmp.config.window.bordered(border("CmpBorder")),
                                         documentation = cmp.config.window.bordered(border("CmpDocBorder")),
                                 },
+                        })
+                        cmp.setup.cmdline("/", {
+                                mapping = cmp.mapping.preset.cmdline(),
+                                sources = {
+                                        { name = "buffer" },
+                                },
+                        })
+                        cmp.setup.cmdline(":", {
+                                mapping = cmp.mapping.preset.cmdline(),
+                                sources = cmp.config.sources({
+                                        { name = "path" },
+                                }, {
+                                        { name = "cmdline" },
+                                }),
                         })
                 end,
         },
@@ -540,6 +565,12 @@ vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize +2<CR>", { desc = "Decreas
 --splits
 vim.keymap.set("n", "<leader>-", "<C-w>s", { desc = "Split below" })
 vim.keymap.set("n", "<leader>|", "<C-w>v", { desc = "Split right" })
+
+--package manager
+vim.keymap.set("n", "<leader>pl", "<CMD>Lazy<CR>", { desc = "Lazy" })
+
+--dismiss notifications
+vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", { desc = "Dissmiss Notifications" })
 
 --:q uses force quit
 vim.api.nvim_command("command! -bang Q q!")
