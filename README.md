@@ -40,7 +40,7 @@ minimal init.lua i like to use for vms/servers
 
 ## telescope
 - space + ff for telescope
-- space + fg for telescpe grep
+- space + fg for telescope grep
 - space + fr for recent files
 ## genereal
 - alt + left/right/up/down for changing windows size
@@ -49,5 +49,5 @@ minimal init.lua i like to use for vms/servers
 - space + pm to open mason
 
 ## splits
-- spaace + | vertical split
+- space + | vertical split
 - space + - horizontal split
