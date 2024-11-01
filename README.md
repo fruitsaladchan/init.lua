@@ -9,7 +9,6 @@ minimal init.lua i like to use for vms/servers
 - lazy package manager
 - catpuccin colorscheme
 - conform.nvim
-- neovim-lsp
 - nvim-cmp
 - nvim-treesitter
 - mason.nvim
@@ -17,6 +16,7 @@ minimal init.lua i like to use for vms/servers
 - which-key.nvim
 - nvim-tree.lua
 - telescope.nvim
+- noice.nvim
 - and more!
 
 
