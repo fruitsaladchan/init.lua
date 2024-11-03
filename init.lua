@@ -106,9 +106,10 @@ require("lazy").setup({
 		"folke/noice.nvim",
 		event = "VeryLazy",
 		opts = {
-			cmdline = {
-				view = "cmdline",
-			},
+		  presets = {
+                	bottom_search = false,
+                	command_palette = true,
+		    },
 		},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
