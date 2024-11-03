@@ -511,13 +511,13 @@ vim.cmd.colorscheme("catppuccin")
 vim.g.mapleader = " "
 
 --nvim-tree
-vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true }) -- Toggle file explorer
+vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true }) -- Toggle file explorer
 
 --telescope
-vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { noremap = true }) -- Fuzzy find files
-vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", { noremap = true }) -- Fuzzy grep search
-vim.keymap.set("n", "<leader>fr", ":Telescope oldfiles<CR>", { noremap = true }) -- Fuzzy recent files
-vim.keymap.set("n", "<leader>fc", ":Telescope grep_string<CR>", { noremap = true }) -- Fuzzy string under cursor in cwd
+vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { noremap = true, silent = true }) -- Fuzzy find files
+vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", { noremap = true, silent = true }) -- Fuzzy grep search
+vim.keymap.set("n", "<leader>fr", ":Telescope oldfiles<CR>", { noremap = true, silent = true }) -- Fuzzy recent files
+vim.keymap.set("n", "<leader>fc", ":Telescope grep_string<CR>", { noremap = true, silent = true }) -- Fuzzy string under cursor in cwd
 
 --custom
 vim.keymap.set("n", "W", "b", { noremap = true })
