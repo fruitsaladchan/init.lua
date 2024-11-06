@@ -17,8 +17,8 @@ require("lazy").setup({
                 name = "catppuccin",
                 config = function()
                         require("catppuccin").setup({
-                                flavour = "mocha", -- Options: latte, frappe, macchiato, mocha
-                                transparent_background = true, -- Enable transparent background
+                                flavour = "mocha",
+                                transparent_background = true, 
                         })
                 end,
         },
