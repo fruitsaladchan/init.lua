@@ -1,8 +1,8 @@
 # init.lua
 minimal init.lua i like to use for vms/servers
 
-![image](https://github.com/user-attachments/assets/274eda85-689c-4486-9c4c-223929a7dd42)
-
+![image](./assets/lazy.png.png) 
+![image](./assets/cmp.png)
 
 
 # plugins
