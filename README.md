@@ -1,7 +1,7 @@
 # init.lua
 minimal init.lua i like to use for vms/servers
 
-![image](./assets/lazy.png.png) 
+![image](./assets/lazy.png) 
 ![image](./assets/cmp.png)
 
 
