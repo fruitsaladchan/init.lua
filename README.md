@@ -26,7 +26,7 @@ minimal init.lua i like to use for vms/servers
 - fd
 - gcc
 - npm
-- luarocks (only needed for lua_ls. if you dont want lua_ls remove from the ```ensure_installed sections on line 106```)
+- luarocks (only needed for lua_ls. if you dont want lua_ls remove from the ```ensure_installed section on line 106```)
 
 # bindings
 
