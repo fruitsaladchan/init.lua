@@ -139,16 +139,6 @@ require("lazy").setup({
                     },
                 },
             },
-            -- menu = {
-            --     auto_show = true,
-            --     draw = {
-            --         columns = {
-            --             { "label", "label_description", gap = 1 },
-            --             { "kind_icon", "kind" }
-            --         },
-            --     }
-            -- },
-            -- documentation = { auto_show = true, auto_show_delay_ms = 0 },
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
             },
@@ -205,9 +195,6 @@ require("lazy").setup({
         },
         opts = { move_cursor = true },
     },
-    -- {
-    --     "romainl/vim-cool",
-    -- },
 })
 -- General Neovim settings
 vim.opt.number = true         -- Show line numbers
@@ -296,8 +283,7 @@ vim.keymap.set('n', '<leader>fn', function()
 end, { noremap = true, silent = true })
 
 --custom
--- vim.keymap.set("n", "<leader>c", ":nohlsearch<CR>", { desc = "Clear search highlights" })
--- vim.keymap.set("n", "<Esc>", ":silent nohlsearch<CR><Esc>", { desc = "Clear search highlights and go to normal mode" })
+vim.keymap.set("n", "<C-c>", ":nohlsearch<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "W", "b", { noremap = true })
 vim.keymap.set("n", "<A-h>", "^", { desc = "To the first non-blank char of the line" })
 vim.keymap.set("n", "<A-l>", "$", { desc = "To the end of the line" })
