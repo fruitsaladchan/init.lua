@@ -271,9 +271,9 @@ vim.opt.ignorecase = true --ignorecase
 --set theme 
 vim.cmd.colorscheme("gruvbox-material")
 --transparency
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 
 -- Keybindings
 vim.g.mapleader = " " --space key
