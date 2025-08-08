@@ -138,6 +138,16 @@ require("lazy").setup({
                         auto_insert = false,
                     },
                 },
+                documentation = { auto_show = true, auto_show_delay_ms = 0 },
+                menu = {
+                    auto_show = true,
+                    draw = {
+                        columns = {
+                            { "label", "label_description", gap = 1 },
+                            { "kind_icon", "kind" }
+                        },
+                    }
+                },
             },
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
@@ -219,9 +229,9 @@ vim.opt.scrolloff = 10    -- Keep 10 lines above/below cursor
 
 --visual
 vim.opt.termguicolors = true  --use termguicolors
-vim.opt.signcolumn = "yes"    --enable sign column
+vim.opt.signcolumn = "yes"
 vim.opt.cmdheight = 1         -- cmd bar height
--- vim.opt.colorcolumn = "150"   -- Show column at 150 characters
+-- vim.opt.colorcolumn = "150"   -- Show column at 100 characters
 vim.opt.winborder = "rounded"
 vim.opt.showmatch = true      -- Highlight matching brackets
 vim.o.showtabline = 2 --awlays show tab line
