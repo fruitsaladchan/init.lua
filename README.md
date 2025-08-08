@@ -1,32 +1,18 @@
-# init.lua
-minimal init.lua i like to use for vms/servers
-
-![image](./assets/lazy.png) 
-![image](./assets/cmp.png)
-
+# suckless nvim
+minimal init.lua. 11 plugins. could reduce more if you really wanted too.
 
 # plugins
 - lazy package manager
-- catpuccin colorscheme
-- conform.nvim
-- nvim-cmp
-- nvim-treesitter
-- mason.nvim
-- lualine.nvim
-- which-key.nvim
-- nvim-tree.lua
-- telescope.nvim
-- noice.nvim
-- and more!
-
+- nvim-lsp
+- blink-cmp
+- mason
 
 # requirements
-- a nerd font (im using JetBrainsMono Nerd Font)
 - ripgrep
-- fd
-- gcc
-- npm
-- luarocks (only needed for lua_ls. if you dont want lua_ls remove it from the ```ensure_installed section on line 106```)
+- gcc or other c compiler needed for treesitter
+### optional
+- npm. by default there are no lsps installed so only needed if you plan on installing other lsp servers
+
 
 # bindings
 
@@ -35,18 +21,19 @@ minimal init.lua i like to use for vms/servers
 - shift + l to move to next buffer
 - space + bd to close buffer
 
-## nvim-tree
-- control + n for file tree
-
 ## telescope
 - space + ff for telescope
 - space + fg for telescope grep
 - space + fr for recent files
+
 ## genereal
 - alt + left/right/up/down for changing windows size
 - control + h/l for moving window ( ie from neovim to filetree)
 - space + pl to open lazy
 - space + pm to open mason
+- control + c to clear highlights
+- space + t for floating terminal
+- control + n for netrw
 
 ## splits
 - space + | vertical split
