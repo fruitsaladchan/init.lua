@@ -206,42 +206,44 @@ require("lazy").setup({
         opts = { move_cursor = true },
     },
 })
+
 -- General Neovim settings
-vim.opt.number = true         -- Show line numbers
-vim.opt.relativenumber = true -- Relative line numbers
-vim.opt.undofile = true       -- enable undofile
-vim.opt.swapfile = false      -- Don't create swap files
-vim.opt.splitright = true     -- Vertical splits open on the right
-vim.opt.splitbelow = true     -- Horizontal splits open below
-vim.opt.mouse = "a"           -- Enable mouse support
-vim.opt.clipboard = "unnamedplus" --use system clipboard
+vim.opt.number = true             -- Show line numbers
+vim.opt.relativenumber = true     -- Relative line numbers
+vim.opt.undofile = true           -- Enable undofile
+vim.opt.swapfile = false          -- Don't create swap files
+vim.opt.splitright = true         -- Vertical splits open on the right
+vim.opt.splitbelow = true         -- Horizontal splits open below
+vim.opt.mouse = ""                -- Disable mouse support
+vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 vim.opt.title = true
-vim.opt.hidden = true
+vim.opt.hidden = false            -- Stop netrw opening no-name buffer
 vim.opt.errorbells = false
 vim.opt.backspace = "indent,eol,start"
-vim.opt.iskeyword:append("-", "_")  -- Treat dash and underscore as part of word
-vim.opt.path:append("**")      -- include subdirectories in search
-vim.opt.modifiable = true      --buffer modifications
-vim.opt.encoding = "UTF-8"     --encoding
+vim.opt.iskeyword:append("-", "_")-- Treat dash and underscore as part of word
+vim.opt.path:append("**")         -- Include subdirectories in search
+vim.opt.modifiable = true         -- Buffer modifications
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
 vim.cmd.set("wildmenu")
-vim.opt.wrap = false      --disable text wrapping
-vim.opt.scrolloff = 10    -- Keep 10 lines above/below cursor
+vim.opt.wrap = false              -- Disable text wrapping
+vim.opt.scrolloff = 10            -- Keep 10 lines above/below cursor
 
 --visual
-vim.opt.termguicolors = true  --use termguicolors
+vim.opt.termguicolors = true      -- Use termguicolors
 vim.opt.signcolumn = "yes"
-vim.opt.cmdheight = 1         -- cmd bar height
--- vim.opt.colorcolumn = "150"   -- Show column at 100 characters
+vim.opt.cmdheight = 1             -- Cmd bar height
+-- vim.opt.colorcolumn = "150"    -- Show column at 100 characters
 vim.opt.winborder = "rounded"
-vim.opt.showmatch = true      -- Highlight matching brackets
-vim.o.showtabline = 2 --awlays show tab line
+vim.opt.showmatch = true          -- Highlight matching brackets
+vim.o.showtabline = 2             --awlays show tab line
 
 --indentation
-vim.opt.tabstop = 4           -- Number of spaces tabs count for
-vim.opt.shiftwidth = 4        -- Number of spaces for auto-indents
-vim.opt.expandtab = true      -- Use spaces instead of tabs
-vim.opt.smartindent = true    -- Smart auto-indenting
-vim.opt.autoindent = true     -- Copy indent from current line
+vim.opt.tabstop = 4               -- Number of spaces tabs count for
+vim.opt.shiftwidth = 4            -- Number of spaces for auto-indents
+vim.opt.expandtab = true          -- Use spaces instead of tabs
+vim.opt.smartindent = true        -- Smart auto-indenting
+vim.opt.autoindent = true         -- Copy indent from current line
 
 -- Performance changes
 vim.opt.redrawtime = 10000
@@ -256,14 +258,14 @@ vim.g.netrw_liststyle = 3
 vim.g.netrw_banner = 0
 vim.g.netrw_browse_split = 4
 vim.keymap.set("n", "<C-n>", ":15Lex<CR>", { noremap = true, silent = true })
-vim.g.netrw_hide = '' --show dotfiles
+vim.g.netrw_hide = ''             -- Show dotfiles
 
 --search settings
-vim.opt.incsearch = true  --show matches at typs
-vim.opt.cursorline = true -- Highlight current line
-vim.opt.hlsearch = true   -- highlight search results
-vim.opt.smartcase = true  --use smartcase
-vim.opt.ignorecase = true --ignorecase
+vim.opt.incsearch = true          -- show matches at typs
+vim.opt.cursorline = true         -- Highlight current line
+vim.opt.hlsearch = true           -- highlight search results
+vim.opt.smartcase = true          -- use smartcase
+vim.opt.ignorecase = true         -- Ignorecase
 
 --set theme 
 vim.cmd.colorscheme("gruvbox-material")
@@ -511,4 +513,3 @@ function _G.BufferLine()
   s = s .. '%#TabLineFill#%='
   return s
 end
-
