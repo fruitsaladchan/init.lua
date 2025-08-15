@@ -358,6 +358,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
+-- open help window in a vertical split
+vim.api.nvim_create_autocmd("BufWinEnter", {
+    group = vim.api.nvim_create_augroup("help_window_right", {}),
+    pattern = { "*.txt" },
+    callback = function()
+        if vim.o.filetype == 'help' then vim.cmd.wincmd("L") end
+    end
+})
+
 --create dir when saving a file if it dosent exit
 vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("mvim_pde_auto_create_dir", { clear = true }),
