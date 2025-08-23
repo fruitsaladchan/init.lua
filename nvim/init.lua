@@ -62,7 +62,7 @@ require("lazy").setup({
                     local opts = { buffer = ev.buf, silent = true }
 
                     -- set keybinds
-                    keymap.set("n", "gR", "cmdTelescope lsp_references<CR>", opts) -- show definition, references
+                    keymap.set("n", "<leader>gf", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
                     keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
 
@@ -87,6 +87,10 @@ require("lazy").setup({
                     keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
                     keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+                    keymap.set("n", "<leader>cf", function() vim.lsp.buf.format() end)  -- format code
+
+
                 end,
             })
 
@@ -131,7 +135,7 @@ require("lazy").setup({
             },
             completion = {
                 keyword = { range = "full" },
-                trigger = { show_on_backspace = false },
+                trigger = { show_on_backspace = true },
                 list = {
                     selection = {
                         preselect = false,
@@ -217,7 +221,8 @@ vim.opt.splitbelow = true         -- Horizontal splits open below
 vim.opt.mouse = ""                -- Disable mouse support
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 vim.opt.title = true
-vim.opt.hidden = false            -- Stop netrw opening no-name buffer
+vim.opt.hidden = false
+
 vim.opt.errorbells = false
 vim.opt.backspace = "indent,eol,start"
 vim.opt.iskeyword:append("-", "_")-- Treat dash and underscore as part of word
@@ -268,11 +273,12 @@ vim.opt.smartcase = true          -- use smartcase
 vim.opt.ignorecase = true         -- Ignorecase
 
 --set theme 
-vim.cmd.colorscheme("gruvbox-material")
+vim.cmd.colorscheme("seoul256")
+
 --transparency
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
--- vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 
 -- Keybindings
 vim.g.mapleader = " " --space key
@@ -285,6 +291,8 @@ vim.keymap.set("n", "<leader>fr", ":Telescope oldfiles<CR>", { noremap = true, s
 vim.keymap.set("n", "<leader>fc", ":Telescope grep_string<CR>", { noremap = true, silent = true }) -- Fuzzy string under cursor in cwd
 vim.keymap.set("n", "<leader>fb", ":Telescope buffers<CR>", { noremap = true, silent = true })     -- Fuzzy find buffers
 vim.keymap.set("n", "<leader>ft", ":Telescope colorscheme<CR>", { noremap = true, silent = true }) -- Fuzzy find buffers
+vim.keymap.set("n", "<leader>fh", ":Telescope help_tags<CR>", { noremap = true, silent = true }) -- Fuzzy find buffers
+vim.keymap.set("n", "<leader>fm", ":Telescope marks<CR>", { noremap = true, silent = true }) -- Fuzzy find marks
 local nvim_config_path = vim.fn.stdpath('config') --Fuzzy find config files
 vim.keymap.set('n', '<leader>fn', function()
   require('telescope.builtin').find_files({
@@ -328,8 +336,8 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true, remap = 
 vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true, remap = true, desc = "Go to right window" })
 
 --buffers
-vim.keymap.set("n", "H", ":bprevious<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "L", ":bnext<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "H", ":bprevious!<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "L", ":bnext!<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, { noremap = true, silent = true })
 
@@ -522,3 +530,4 @@ function _G.BufferLine()
   s = s .. '%#TabLineFill#%='
   return s
 end
+
